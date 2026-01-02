@@ -3,10 +3,7 @@ public:
     int candy(vector<int>& ratings) {
         int n=ratings.size();
         vector<int> left(n);
-        vector<int> right(n);
         left[0]=1;
-        right[n-1]=1;
-        int candies=0;
         for(int i=1;i<n;i++)
         {
             if(ratings[i]>ratings[i-1])
@@ -14,17 +11,17 @@ public:
             else
             left[i]=1;
         }
+        int right=1;
+        int candies=max(1,left[n-1]);
         for(int i=n-2;i>=0;i--)
         {
             if(ratings[i]>ratings[i+1])
-            right[i]=right[i+1]+1;
+            {
+                right++;
+            }
             else
-            right[i]=1;
-        }
-        for(int i=0;i<n;i++)
-        {
-            int maxi=max(left[i],right[i]);
-            candies+=maxi;
+            right=1;
+            candies+=max(left[i],right);
         }
         return candies;
     }
